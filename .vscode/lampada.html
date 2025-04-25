@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Lâmpada DOM</title>
+</head>
+<body>
+
+  <!-- A imagem da lâmpada começa apagada -->
+  <img 
+    id="lampada" 
+    src="lampada-off.jpg" 
+    alt="Lâmpada apagada" 
+    style="width:150px; cursor:pointer;"
+  >
+
+  <script>
+    // Captura a imagem
+    const lampada = document.getElementById("lampada");
+
+    // Função para trocar a imagem
+    function alternarLampada() {
+      if (lampada.src.includes("lampada-off.jpg")) {
+        lampada.src = "lampada-on.jpg";
+      } else {
+        lampada.src = "lampada-off.jpg";
+      }
+    }
+
+    // Evento de clique para mudar o estado da lâmpada
+    lampada.addEventListener("click", alternarLampada);
+  </script>
+
+</body>
+</html>

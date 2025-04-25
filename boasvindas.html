@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <title>JS Examples</title>
+</head>
+<body>
+  <p>Nome Completo:</p>
+  <input type="text" name="nome-completo" id="nome-completo" placeholder="Digite seu nome" />
+  <br />
+  <input type="button" value="Ok" id="btn-boas-vindas" />
+  <hr>
+
+  <script>
+    // Função que recebe o nome e exibe um alerta
+    function boasVindas(nome) {
+      alert('Seja bem-vindo ' + nome);
+    }
+
+    // Capturando o botão
+    const botao = document.getElementById("btn-boas-vindas");
+
+    // Adicionando o evento de clique
+    botao.addEventListener("click", function() {
+      // Captura o valor do input
+      const nome = document.getElementById("nome-completo").value;
+      // Chama a função passando o nome
+      boasVindas(nome);
+    });
+  </script>
+</body>
+</html>
