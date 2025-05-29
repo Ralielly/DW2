@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="UTF-8">
+  <title>Consulta de Livro por API</title>
+  <link rel="stylesheet" href="api.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Consulta de Livro por ISBN</h1>
+    <form id="isbn-form">
+      <label for="isbn">Digite o ISBN:</label>
+      <input type="text" id="isbn" name="isbn" placeholder="Ex: 9788535914849" required>
+      <button type="submit">Buscar</button>
+      <p id="error-message" class="error"></p>
+    </form>
+
+    <div id="resultado" class="resultado hidden">
+      <h2>Informações do Livro</h2>
+      <p><strong>Título:</strong> <span id="titulo"></span></p>
+      <p><strong>Subtítulo:</strong> <span id="subtitulo"></span></p>
+      <p><strong>Autor(es):</strong> <span id="autores"></span></p>
+      <p><strong>Editora:</strong> <span id="editora"></span></p>
+      <p><strong>Sinopse:</strong> <span id="sinopse"></span></p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('isbn-form');
+    const isbnInput = document.getElementById('isbn');
+    const errorMessage = document.getElementById('error-message');
+    const resultado = document.getElementById('resultado');
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const isbn = isbnInput.value.trim();
+
+      if (!/^\d{10,13}$/.test(isbn)) {
+        errorMessage.textContent = 'Por favor, insira um ISBN válido (10 ou 13 dígitos numéricos).';
+        resultado.classList.add('hidden');
+        return;
+      }
+
+      errorMessage.textContent = '';
+
+      fetch(`https://brasilapi.com.br/api/isbn/v1/${isbn}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Livro não encontrado para o ISBN informado.');
+          }
+          return response.json();
+        })
+        .then(data => {
+          document.getElementById('titulo').textContent = data.title || 'N/A';
+          document.getElementById('subtitulo').textContent = data.subtitle || 'N/A';
+          document.getElementById('autores').textContent = data.authors?.join(', ') || 'N/A';
+          document.getElementById('editora').textContent = data.publisher || 'N/A';
+          document.getElementById('sinopse').textContent = data.synopsis || 'N/A';
+
+          resultado.classList.remove('hidden');
+        })
+        .catch(error => {
+          errorMessage.textContent = error.message;
+          resultado.classList.add('hidden');
+        });
+    });
+  </script>
+</body>
+</html>
