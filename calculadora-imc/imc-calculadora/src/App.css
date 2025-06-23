@@ -1,8 +1,8 @@
 .container {
-  max-width: 500px;
+  max-width: 400px;
   margin: 50px auto;
   text-align: center;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: sans-serir;
 }
 
 input {
